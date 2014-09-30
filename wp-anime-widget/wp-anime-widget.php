@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: WP EMAG Anime
-Description: Sets the anime EMAG is watching
+Plugin Name: WP Anime Widget
+Description: Counters for two shows with the option to go random
 Version: 1.0
 Author: Keith Brown
 License: GPL2
@@ -22,9 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if(!class_exists('wp_EMAG_next'))
+if(!class_exists('wp_anime_widget'))
 {
-    class wp_EMAG_next extends WP_Widget {
+    class wp_anime_widget extends WP_Widget {
 
         /**
          * Register widget with WordPress.
@@ -32,7 +32,7 @@ if(!class_exists('wp_EMAG_next'))
         function __construct()
         {
             parent::__construct(
-                'wp_EMAG_next', // Base ID
+                'wp_anime_widget', // Base ID
                 __('Current Anime', 'text_domain'), // Name
                 array( 'description' => __( 'Displays the current anime we\'re watching', 'text_domain' ), ) // Args
             );
@@ -316,10 +316,10 @@ if(!class_exists('wp_EMAG_next'))
     }
 }
 
-if(class_exists('wp_EMAG_next'))
+if(class_exists('wp_anime_widget'))
 {
     // register widget
-    add_action('widgets_init', create_function('', 'return register_widget("wp_EMAG_next");'));
+    add_action('widgets_init', create_function('', 'return register_widget("wp_anime_widget");'));
 
     // queue up the necessary js
     function hrw_enqueue()
@@ -327,8 +327,7 @@ if(class_exists('wp_EMAG_next'))
       wp_enqueue_style('thickbox');
       wp_enqueue_script('media-upload');
       wp_enqueue_script('thickbox');
-      // moved the js to an external file, you may want to change the path
-      wp_enqueue_script('hrw', '/wp-content/plugins/wp-emag-anime/script.js', null, null, true);
+      wp_enqueue_script('hrw', '/wp-content/plugins/wp-anime-widget/script.js', null, null, true);
     }
 
     add_action('admin_enqueue_scripts', 'hrw_enqueue');
