@@ -10,6 +10,12 @@ jQuery(function($){
     tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
     return false;
   });
+
+  $('#rand1').on('change', function() {
+    var isChecked = $(this).prop('checked'); // this will equate to either 'true' or 'false'...
+    $('.ani1').attr('disabled', isChecked); // ...meaning that we can use its value to set the 'disabled' attribute 
+  });
+
   window.send_to_editor = function(html) {
     imgurl = $('img', html).attr('src');
     image_field.val(imgurl);
