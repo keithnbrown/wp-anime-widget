@@ -178,8 +178,6 @@ if(!class_exists('wp_anime_widget'))
         // widget display
         function widget($args, $instance)
         {
-            //echo '<!--'.var_dump($args).'-->';
-            //echo '<!--'.var_dump($instance).'-->';
             extract( $args );
             // these are the widget options
             $s1title = $instance['s1title'];
@@ -197,121 +195,120 @@ if(!class_exists('wp_anime_widget'))
             $s2lim = $instance['s2lim'];
             $s2delay = $instance['s2delay'];
             $s2rand = $instance['s2rand'] ? True : False;
-            echo '<!--'.' '.$s1rand.' '.$s1title.' '.$s1date.' '.$s1image.' '.$s1no.' '.$s1lim."\n";
-            echo $s1delay.' '.$s2rand.' '.$s2title.' '.$s2date.' '.$s2image.' '.$s2no.' '.$s2lim.' '.$s2delay.' '.'-->';
-            //echo $before_widget;
+            //echo '<!--'.' '.$s1rand.' '.$s1title.' '.$s1date.' '.$s1image.' '.$s1no.' '.$s1lim;
+            //echo $s1delay.' '.$s2rand.' '.$s2title.' '.$s2date.' '.$s2image.' '.$s2no.' '.$s2lim.' '.$s2delay.' '.'-->';
             // Display the widget
 
             // Check if title is set
-            if ( $s1title ) {
-              //echo $before_title . $s1title . $after_title;
-           }
-
-           // Check if text is set
-           if( $text ) {
-              //echo '<p class="wp_widget_plugin_text">'.$text.'</p>';
-           }
-           // Check if textarea is set
-           if( $textarea ) {
-             //echo '<p class="wp_widget_plugin_textarea">'.$textarea.'</p>';
-           }
-            // basic output just for this example
-            //echo '<a href="#"><img src="'.esc_url($instance['s1image']).'" /><h4>'.esc_html($instance['s1image']).'</h4></a>';
-
-            $today = date("Y-m-d");
-
-            echo '<!--Running Series Widget-->';
-            echo '     <div id="runningseries">';
-            echo '          <h3 id="runhead">Next Meet\'s Showings:</h3>';
-
-            echo '                <div id="series1">';
-            $randurl = get_bloginfo('wpurl')."/random.png";
-            if ($s1rand)
+            if (( $s1rand || ($s1title && $s1date && $s1image && $s1no && $s1lim)) && ( $s2rand || ($s2title && $s2date && $s2image && $s2no && $s2lim)))
             {
-                echo '                      <!--Random Show-->';
-                echo '                      <img src="'.$randurl.'" class="running" alt="Random" />';
-                echo '                            <p class="showtitle">Random Pick</p>';
-            }
-            else
-            {
-                echo '                      <!--'.$s1title.'-->';
-                echo '                      <img src="'.esc_url($instance['s1image']).'" class="running" alt="'.$s1title.'" />';
-                echo '                            <p class="showtitle">'.$s1title.'</p>';
-                while (strtotime($s1date)<strtotime($today)) {
-                    $s1date = date("Y-m-d", strtotime("{$s1date} +14 days"));
-                    $s1no += 2;
-                }
-                for ($count = 0; $count < $s1delay; $count++)
+                $today = date("Y-m-d");
+
+                echo '<!--Running Series Widget-->';
+                echo '     <div id="runningseries">';
+                echo '          <h3 id="runhead">Next Meet\'s Showings:</h3>';
+
+                echo '                <div id="series1">';
+                $randurl = get_bloginfo('wpurl')."/wp-content/plugins/wp-anime-widget/random.png";
+                if ($s1rand)
                 {
-                    $s1no -= 2;
-                }
-                if ($s1no > $s1lim)
-                {
-                    $s1no = $s1lim;
-                }
-                if ($s1no != $s1lim)
-                {
-                    echo '<!--multi episode-->';
-                    echo "<p>Episodes</p><p>".$s1no;
-                    if ($s1no + 1 <= $s1lim)
-                    {
-                        echo " & ".($s1no + 1);
-                    }
-                    echo "</p><p>out of ".$s1lim."</p>";
+                    echo '                      <!--Random Show-->';
+                    echo '                      <img src="'.$randurl.'" class="running" alt="Random" />';
+                    echo '                            <p class="showtitle">Random Pick</p>';
                 }
                 else
                 {
-                    echo '<!--single episode-->';
-                    echo "<p>Episode</p><p>".$s1no;
-                    echo " of ".$s1lim."</p>";
-                }
-            }
-            echo '</div>';
-
-            echo '<div id="series2">';
-
-            if ($s2rand)
-            {
-                echo '                      <!--Random Show-->';
-                echo '                      <img src="'.$randurl.'" class="running" alt="Random" />';
-                echo '                            <p class="showtitle">Random Pick</p>';
-            }
-            else
-            {
-                echo '<!--'.$s2title.'-->';
-                echo '<img src="'.esc_url($instance['s2image']).'" class="running" alt="'.$s2title.'" />';
-                echo '<p class="showtitle">'.$s2title.'</p>';
-                while (strtotime($s2date)<strtotime($today)) {
-                    $s2date = date("d-m-Y", strtotime("{$s2date} +14 days"));
-                    $s2no += 2;
-                }
-                for ($count = 0; $count < $s2delay; $count++)
-                {
-                    $s2no -= 2;
-                }
-                if ($s2no > $s2lim)
-                {
-                    $s2no = $s2lim;
-                }
-                if ($s2no != $s2lim)
-                {
-                    echo '<!--multi episode-->';
-                    echo "<p>Episodes</p><p>".$s2no;
-                    if ($s2no + 1 <= $s2lim)
-                    {
-                        echo " & ".($s2no + 1);
+                    echo '                      <!--'.$s1title.'-->';
+                    echo '                      <img src="'.esc_url($instance['s1image']).'" class="running" alt="'.$s1title.'" />';
+                    echo '                            <p class="showtitle">'.$s1title.'</p>';
+                    while (strtotime($s1date)<strtotime($today)) {
+                        $s1date = date("Y-m-d", strtotime("{$s1date} +14 days"));
+                        $s1no += 2;
                     }
-                    echo "</p><p>out of ".$s2lim."</p>";
+                    for ($count = 0; $count < $s1delay; $count++)
+                    {
+                        $s1no -= 2;
+                    }
+                    if ($s1no > $s1lim)
+                    {
+                        $s1no = $s1lim;
+                    }
+                    if ($s1no != $s1lim)
+                    {
+                        echo '<!--multi episode-->';
+                        echo "<p>Episodes</p><p>".$s1no;
+                        if ($s1no + 1 <= $s1lim)
+                        {
+                            echo " & ".($s1no + 1);
+                        }
+                        echo "</p><p>out of ".$s1lim."</p>";
+                    }
+                    else
+                    {
+                        echo '<!--single episode-->';
+                        echo "<p>Episode</p><p>".$s1no;
+                        echo " of ".$s1lim."</p>";
+                    }
+                }
+                echo '</div>';
+
+                echo '<div id="series2">';
+
+                if ($s2rand)
+                {
+                    echo '                      <!--Random Show-->';
+                    echo '                      <img src="'.$randurl.'" class="running" alt="Random" />';
+                    echo '                            <p class="showtitle">Random Pick</p>';
                 }
                 else
                 {
-                    echo '<!--single episode-->';
-                    echo "<p>Episode</p><p>".$s2no;
-                    echo " of ".$s2lim."</p>";
+                    echo '<!--'.$s2title.'-->';
+                    echo '<img src="'.esc_url($instance['s2image']).'" class="running" alt="'.$s2title.'" />';
+                    echo '<p class="showtitle">'.$s2title.'</p>';
+                    while (strtotime($s2date)<strtotime($today)) {
+                        $s2date = date("d-m-Y", strtotime("{$s2date} +14 days"));
+                        $s2no += 2;
+                    }
+                    for ($count = 0; $count < $s2delay; $count++)
+                    {
+                        $s2no -= 2;
+                    }
+                    if ($s2no > $s2lim)
+                    {
+                        $s2no = $s2lim;
+                    }
+                    if ($s2no != $s2lim)
+                    {
+                        echo '<!--multi episode-->';
+                        echo "<p>Episodes</p><p>".$s2no;
+                        if ($s2no + 1 <= $s2lim)
+                        {
+                            echo " & ".($s2no + 1);
+                        }
+                        echo "</p><p>out of ".$s2lim."</p>";
+                    }
+                    else
+                    {
+                        echo '<!--single episode-->';
+                        echo "<p>Episode</p><p>".$s2no;
+                        echo " of ".$s2lim."</p>";
+                    }
+                }
+                echo '</div></div><!--Running Series Widget-->';
+                echo '<div class="clearer"></div>';
+            }
+            else
+            {
+                echo "<!--This widget does not have all the information it needs to run-->";
+                if (!$s1rand && !($s1title && $s1date && $s1image && $s1no && $s1lim))
+                {
+                    echo "<!--Series 1 needs to be random or have a title, start date, image, start number and end number-->";
+                }
+                if (!$s2rand && !($s2title && $s2date && $s2image && $s2no && $s2lim))
+                {
+                    echo "<!--Series 2 needs to be random or have a title, start date, image, start number and end number-->";
                 }
             }
-            echo '</div></div><!--Running Series Widget-->';
-            echo '<div class="clearer"></div>';
         }
     }
 }
