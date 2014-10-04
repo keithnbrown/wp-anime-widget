@@ -1,0 +1,37 @@
+.clearer
+{
+     clear: both;
+}
+		
+.running
+{
+	width: 100px;
+	margin: 3px 3px;
+	border: 2px solid black;
+}
+		
+#runhead
+{
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	font-family: "Berlin Sans FB Demi", sans-serif;
+	padding: 0 5px;
+	text-align: center;
+}
+#series1, #series2
+{
+     width: 112px;
+     text-align: center;
+}
+#series1
+{
+     float: left;
+}
+#series2
+{
+     float: right;
+}
+#series1 p, #series2 p
+{
+     margin:  0em;
+}

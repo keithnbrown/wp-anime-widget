@@ -326,8 +326,13 @@ if(class_exists('wp_anime_widget'))
       wp_enqueue_script('thickbox');
       wp_enqueue_script('hrw', '/wp-content/plugins/wp-anime-widget/script.js', null, null, true);
     }
-
+    function css_enqueue()
+    {
+      //$csspath = get_bloginfo('wpurl')."/wp-content/plugins/wp-anime-widget/anistyle.css";
+      //echo '<!--path-'.$csspath.'-->';
+      wp_enqueue_style('anistyle', '/wp-content/plugins/wp-anime-widget/anistyle.css' , FALSE, FALSE, 'all');
+    }
     add_action('admin_enqueue_scripts', 'hrw_enqueue');
-
+    add_action('wp_head','css_enqueue');
 }
 ?>
